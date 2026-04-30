@@ -1,0 +1,128 @@
+// A1. Distance Regression (Translation Only: forward/backward/left/right)
+{
+    "task_type": "A1",
+    "messages": [
+      {
+        "role": "user",
+        "content": "<image><image>How many meters did the camera move to get the second image? Answer as: move {DIR} X meters."
+      },
+      {
+        "role": "assistant",
+        "content": "move {DIR} {DIST} meters"
+      }
+    ],
+    "images": ["{IMG_1}", "{IMG_2}"]
+}
+
+// A2. Angle Regression (Rotation Only: turn left/right)
+{
+    "task_type": "A2",
+    "messages": [
+      {
+        "role": "user",
+        "content": "<image><image>How many degrees did the camera turn to get the second image? Answer as: turn {TURN_DIR} X degrees."
+      },
+      {
+        "role": "assistant",
+        "content": "turn {TURN_DIR} {ANGLE} degrees"
+      }
+    ],
+    "images": ["{IMG_1}", "{IMG_2}"]
+}
+
+
+// A3. Action Sequence (Two/Three-Step Only: write actions in order)
+{
+    "task_type": "A3",
+    "messages": [
+      {
+        "role": "user",
+        "content": "<image><image>To move from the first image to the second image, the camera used 2 or 3 actions in order. Write the full action sequence using ';' as a separator. Allowed actions:\n- move forward/backward/left/right X meters\n- turn left/right X degrees"
+      },
+      {
+        "role": "assistant",
+        "content": "{ACTION_SEQ}"
+      }
+    ],
+    "images": ["{IMG_1}", "{IMG_2}"]
+}
+
+// A4. Yes/No Verification (Given action statement: true or false)
+{
+    "task_type": "A4",
+    "messages": [
+      {
+        "role": "user",
+        "content": "<image><image>True or false: the camera did \"{CLAIM_ACTION}\" to get the second image."
+      },
+      {
+        "role": "assistant",
+        "content": "{TF}"
+      }
+    ],
+    "images": ["{IMG_1}", "{IMG_2}"]
+}
+
+// //   D1. Track the object: bbox in image2 (MCQ recommended)修改：去掉回答，直接输出bbox坐标
+// {
+//     "messages": [
+//       {
+//         "role": "user",
+//         "content": "<image><image>In the first image, the {OBJECT} is at bbox {BBOX_1}. After the camera does \"{ACTION_SEQ}\", which bbox in the second image corresponds to the same {OBJECT}? Answer with A, B, C, or D.\nA: {BBOX_A}\nB: {BBOX_B}\nC: {BBOX_C}\nD: {BBOX_D}"
+//       },
+//       {
+//         "role": "assistant",
+//         "content": "{CHOICE}"
+//       }
+//     ],
+//     "images": ["{IMG_1}", "{IMG_2}"]
+// }
+
+// D2. Visibility after action: does the object disappear? (yes/no)
+{
+    "task_type": "D2",
+    "messages": [
+      {
+        "role": "user",
+        "content": "<image>In the image, the {OBJECT} is at bbox {BBOX_1}. After the camera does \"{ACTION_SEQ}\", does this {OBJECT} disappear from view? Answer: yes or no."
+      },
+      {
+        "role": "assistant",
+        "content": "{YN}"
+      }
+    ],
+    "images": ["{IMG_1}"]
+}
+
+//   D3. Same object in both images: infer the 2-step action sequence数据少一点
+{
+    "task_type": "D3",
+    "messages": [
+      {
+        "role": "user",
+        "content": "<image><image>The {OBJECT} in the first image (bbox {BBOX_1}) and the {OBJECT} in the second image (bbox {BBOX_2}) are the same physical object. the camera used 1 or 2 actions in order. Write the full action sequence using ';' as a separator. Allowed actions:\n- move forward/backward/left/right X meters\n- turn left/right X degrees"
+      },
+      {
+        "role": "assistant",
+        "content": "{ACTION_SEQ}"
+      }
+    ],
+    "images": ["{IMG_1}", "{IMG_2}"]
+}
+  
+//   D4. Identity check after action: is it the same object instance? (yes/no)
+{
+    "task_type": "D4",
+    "messages": [
+      {
+        "role": "user",
+        "content": "<image><image>In the first image, the {OBJECT} is at bbox {BBOX_1}. After the camera does \"{ACTION_SEQ}\", the second image shows a {OBJECT} at bbox {BBOX_2}. Are these the same physical object instance? Answer: yes or no."
+      },
+      {
+        "role": "assistant",
+        "content": "{YN}"
+      }
+    ],
+    "images": ["{IMG_1}", "{IMG_2}"]
+}
+  

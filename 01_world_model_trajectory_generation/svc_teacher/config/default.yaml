@@ -1,0 +1,113 @@
+model:
+  backend: "svc" # "svc" | "worldfm"
+
+svc:
+  pretrained_model_name_or_path: "/path/to/stable_virtual_camera_weights"
+  weight_name: "model.safetensors"
+  H: 576
+  W: 576
+  cfg: 4.0 # svc_engine.py 有 2.0 默认值，但这里显式使用 4.0
+  camera_scale: 2.0
+  dynamic_camera_scale: false
+  min_camera_scale: 0.5
+  num_steps: 50
+  cfg_min: 1.2
+  chunk_strategy: "interp"
+  guider_types: [1, 2]
+  compile_model: false
+
+worldfm:
+  config_path: ""
+  hw_path: ""
+  moge_path: ""
+  moge_pretrained: ""
+  model_path: ""
+  vae_path: ""
+  render_size: 512
+  image_size: 512
+  step: 2
+  cfg_scale: 4.5
+  gpu_index: 0
+
+action:
+  distance:
+    min: 0.3
+    max: 2.0
+    unit: 0.1
+    max_step_per_frame: 0.2
+  angle:
+    min: 10.0
+    max: 90.0
+    unit: 10.0
+    max_step_per_frame: 5.0
+
+trajectory:
+  single_step:
+    - "forward"
+    - "backward"
+    - "turn_left"
+    - "turn_right"
+    - "shift_left"
+    - "shift_right"
+  multi_step_presets:
+    - name: "forward_then_turn_left"
+      steps:
+        - act: "forward"
+          distance_range: [0.5, 1.5]
+        - act: "turn_left"
+          angle_range: [20.0, 60.0]
+    - name: "turn_right_then_forward"
+      steps:
+        - act: "turn_right"
+          angle_range: [20.0, 60.0]
+        - act: "forward"
+          distance_range: [0.3, 1.0]
+    - name: "shift_left_then_forward_then_turn_right"
+      steps:
+        - act: "shift_left"
+          distance_range: [0.3, 1.0]
+        - act: "forward"
+          distance_range: [0.5, 1.5]
+        - act: "turn_right"
+          angle_range: [20.0, 60.0]
+
+quality:
+  blur_detection:
+    enabled: false
+    max_retries: 3
+    frame_increase_factor: 1.5
+    laplacian_threshold: 100.0
+    brisque_threshold: 50.0
+    brisque_model_path: ""
+    brisque_range_path: ""
+  input_filter:
+    enabled: false
+  temporal_qc:
+    enabled: false
+    min_diff: 0.01
+    max_diff: 0.4
+
+sampling:
+  frame_keep_k: 6
+
+output:
+  root: "outputs"
+  save_mp4: false
+  fps: 30
+
+prompt:
+  templates_path: "datagen/prompt/templates.jsonl"
+  undetect_out: "data_undetect.jsonl"
+  detect_out: "data_detect.jsonl"
+
+general:
+  seed: 42
+  device: "cuda:0"
+  skip_existing: false
+  camera_config: ""
+  version: "svc_scene_demo"
+  input_dir: ""
+  manifest_jsonl: ""
+  num_chunks: 0
+  chunk_idx: 0
+  merge_chunks: false

@@ -1,0 +1,97 @@
+single_step:
+  - name: forward
+    count: 1
+    distance_range: [0.2, 1.0]
+    unit: 0.1
+
+  - name: backward
+    count: 1
+    distance_range: [0.2, 1.0]
+    unit: 0.1
+
+  - name: turn_left
+    count: 1
+    angle_range: [10.0, 40.0]
+    unit: 10.0
+
+  - name: turn_right
+    count: 1
+    angle_range: [10.0, 40.0]
+    unit: 10.0
+
+  - name: shift_left
+    count: 1
+    distance_range: [0.2, 0.8]
+    unit: 0.1
+
+  - name: shift_right
+    count: 1
+    distance_range: [0.2, 0.8]
+    unit: 0.1
+
+multi_step_presets:
+  - name: forward_turn_left
+    count: 1
+    steps:
+      - act: forward
+        distance_range: [0.4, 0.8]
+        unit: 0.1
+      - act: turn_left
+        angle_range: [20.0, 40.0]
+        unit: 10.0
+
+  - name: forward_turn_right
+    count: 1
+    steps:
+      - act: forward
+        distance_range: [0.4, 0.8]
+        unit: 0.1
+      - act: turn_right
+        angle_range: [20.0, 40.0]
+        unit: 10.0
+
+  - name: shift_left_forward
+    count: 1
+    steps:
+      - act: shift_left
+        distance_range: [0.2, 0.6]
+        unit: 0.1
+      - act: forward
+        distance_range: [0.4, 0.8]
+        unit: 0.1
+
+  - name: shift_right_forward
+    count: 1
+    steps:
+      - act: shift_right
+        distance_range: [0.2, 0.6]
+        unit: 0.1
+      - act: forward
+        distance_range: [0.4, 0.8]
+        unit: 0.1
+
+  - name: forward_turn_left_forward
+    count: 1
+    steps:
+      - act: forward
+        distance_range: [0.4, 0.8]
+        unit: 0.1
+      - act: turn_left
+        angle_range: [20.0, 40.0]
+        unit: 10.0
+      - act: forward
+        distance_range: [0.4, 0.8]
+        unit: 0.1
+
+  - name: forward_turn_right_forward
+    count: 1
+    steps:
+      - act: forward
+        distance_range: [0.4, 0.8]
+        unit: 0.1
+      - act: turn_right
+        angle_range: [20.0, 40.0]
+        unit: 10.0
+      - act: forward
+        distance_range: [0.4, 0.8]
+        unit: 0.1

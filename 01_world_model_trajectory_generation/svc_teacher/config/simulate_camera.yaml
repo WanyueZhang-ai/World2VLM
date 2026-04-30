@@ -1,0 +1,5 @@
+camera:
+  # Simulated scene image shape: 1024x768, square pixels.
+  # horizontal FOV = 90 deg => fx=fy=512, principal point centered.
+  fov_deg: 90.0
+  fov_axis: "horizontal"
